@@ -1,0 +1,334 @@
+QUESTION 1: GCD 
+
+num1 = int(input("Enter the first number: "))
+num2 = int(input("Enter the second number: "))
+
+if num1 < num2:
+    num1, num2 = num2, num1
+
+while num2 != 0:
+    remainder = num1 % num2
+    num1 = num2
+    num2 = remainder
+
+print("GCD:", num1)
+.....................................................
+QUESTION 2:SQUARE ROOT
+
+num = float(input("Enter a number: "))
+square_root = num ** 0.5
+print("Square root:", square_root)
+
+.....................................................
+QUESTION 3:EXPONENTIATION
+
+def power(base, exponent):
+    result = base ** exponent
+    return result
+
+base = float(input("Enter the base number: "))
+exponent = float(input("Enter the exponent: "))
+
+result = power(base, exponent)
+print(f"{base} raised to the power of {exponent} is equal to {result}")
+......................................................
+QUESTION 4:MAXIMUM IN LIST
+
+numbers = [10, 5, 20, 15, 30, 25]
+largest_numbers = []
+for _ in range(3):
+    max_num = max(numbers)
+    largest_numbers.append(max_num)
+    numbers.remove(max_num)
+print("The three largest numbers are:", largest_numbers)
+......................................................
+QUESTION 5a:LINEAR SEARCH
+
+my_list = [3, 7, 11, 15, 19]
+element_to_search = 11
+found = False
+for item in my_list:
+    if item == element_to_search:
+        found = True
+        break
+if found:
+    print(f'Element {element_to_search} found in the list! ')
+else:
+    print(f'Element {element_to_search} not found in the list. ')
+......................................................
+QUESTION 5b:BINARY SEARCH
+
+arr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+target = 13
+
+left = 0
+right = len(arr) - 1
+found = False
+
+while left <= right:
+    mid = (left + right) // 2
+    if arr[mid] == target:
+        found = True
+        break
+    elif arr[mid] < target:
+        left = mid + 1
+    else:
+        right = mid - 1
+
+
+if found:
+    print(f"Element {target} found at index {mid}. ")
+else:
+    print(f"Element {target} not found in the list. ")
+......................................................
+QUESTION 6a:SELECTION SORT
+
+numbers = [64, 25, 12, 22, 11]
+
+print("Original List:")
+print(numbers)
+
+for i in range(len(numbers)):
+    min_index = i
+    for j in range(i + 1, len(numbers)):
+        if numbers[min_index] > numbers[j]:
+            min_index = j
+
+    numbers[i], numbers[min_index] = numbers[min_index], numbers[i]
+
+print("\nSorted List:")
+print(numbers)
+
+......................................................
+QUESTION 6b:INSERTION SORT
+
+my_list = [64, 25, 12, 22, 11]
+
+print("Original list:", my_list)
+
+for i in range(1, len(my_list)):
+    key = my_list[i]
+    j = i - 1
+    while j >= 0 and key < my_list[j]:
+        my_list[j + 1] = my_list[j]
+        j -= 1
+    my_list[j + 1] = key
+
+print("Sorted list:", my_list)
+..........................................................
+QUESTION 6c:MERGE SORT
+
+def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+
+my_list = [12, 11, 13, 5, 6, 7]
+
+print("Original list:", my_list)
+
+merge_sort(my_list)
+
+print("Sorted list:", my_list)
+.............................................................
+QUESTION 7:MULTIPLICATION MATRIX
+
+m1=int(input("Enter the no of rows for matrix 1 : "))
+n1=int(input("Enter the no of column for matrix 1 : "))
+
+m2=int(input("Enter the no of rows for matrix 2 : "))
+n2=int(input("Enter the no of column for matrix 2  : "))
+
+if n1!=m2:
+    print("Matrix multiplication not possible.")
+    exit()
+print("Enter the element of matrix 1:")
+matrix1 =[]
+for i in range(m1):
+    row=[]
+    for j in range(n1):
+        row.append(int(input(f"Enter element [{i+1}][{j+1}]: ")))
+    matrix1.append(row)
+
+print("Enter the element of matrix 2:")
+matrix2 =[]
+for i in range(m2):
+    row=[]
+    for j in range(n2):
+        row.append(int(input(f"Enter element [{i+1}][{j+1}]: ")))
+    matrix2.append(row)
+result=[]
+for i in range(m1):
+    row=[]
+    for j in range(n2):
+        element=0
+        for k in range(n1):
+            element+=matrix1[i][k]*matrix2[k][j]
+        row.append(element)
+    result.append(row)
+print("The product is")
+for row in result:
+    print(row)
+
+..........................................................
+QUESTION 8:STRING SORT
+
+import sys
+
+program_name = sys.argv[0]
+
+list_1 = []
+for i in range(1, len(sys.argv)):
+    arguments = sys.argv[i]
+    list_1.append(arguments)
+
+print("word count:", len(sys.argv) - 1)
+print("Unsorted list")
+print(*list_1, sep="\n")
+
+list_1.sort()
+
+print("sorted list")
+print(*list_1, sep="\n)
+
+EXECUTION :filename values
+
+.................................................................
+QUESTION 9:REPETITION
+
+file = open("sample.txt", "r")
+
+frequent_word = ""
+frequency = 0
+words = []
+
+for line in file:
+    line_word = line.lower().strip().split(" ")
+    
+    for w in line_word:
+        words.append(w)
+
+for i in range(0, len(words)):
+    count = 1
+    
+    for j in range(i + 1, len(words)):
+        if words[i] == words[j]:
+            count += 1
+            
+    if count > frequency:
+        frequent_word = words[i]
+        frequency = count
+
+print("Most repeated word: " + frequent_word)
+print("Frequency: " + str(frequency))
+
+file.close()
+
+
+SAMPLE.txt 
+
+
+
+......................................................................
+
+
+QUESTION 10 a:ELLIPTICAL ORBITS
+
+import pygame
+pygame.init()
+screen = pygame.display.set_mode((400, 300))
+done = False
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+    
+    pygame.draw.circle(screen, (255, 255, 255), [150, 95], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [135, 95], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [120, 95], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [105, 100], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [90, 110], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [85, 130], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [85, 150], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [90, 170], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [110, 185], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [140, 195], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [170, 195], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [200, 190], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [230, 180], 5, 3)
+    pygame.draw.circle(screen, (255, 255, 255), [250, 160], 5, 3)
+    
+    pygame.draw.ellipse(screen, (255, 0, 0), (100, 100, 100, 70), 10)
+    
+    pygame.display.flip()
+
+
+QUESTION 10 b:BOUNCING BALL
+
+import pygame
+import sys
+from pygame.locals import *
+
+pygame.init()
+
+screen = pygame.display.set_mode((400, 300))
+
+done = False
+
+while not done:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+
+    pygame.draw.circle(screen, (255, 255, 255), [100, 80], 10, 0)
+    pygame.display.update()
+
+    pygame.draw.circle(screen, (0, 0, 0), (100, 80), 10, 0)
+    pygame.display.update()
+
+    pygame.draw.circle(screen, (255, 255, 255), [150, 95], 10, 0)
+    pygame.display.update()
+
+    pygame.draw.circle(screen, (0, 0, 0), [150, 95], 10, 0)
+    pygame.display.update()
+
+    pygame.draw.circle(screen, (255, 255, 255), (200, 130), 10, 0)
+    pygame.display.update()
+
+    pygame.draw.circle(screen, (0, 0, 0), (200, 130), 10, 0)
+    pygame.display.update()
+
+    pygame.draw.circle(screen, (255, 255, 255), (250, 150), 10, 0)
+    pygame.display.update()
+
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+
