@@ -1,0 +1,107 @@
+HTTP SERVER............
+
+import java.io.*;
+import java.net.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import javax.swing.*;
+
+public class Server {
+    public static void main(String[] args) throws IOException {
+        ServerSocket server = null;
+        Socket socket = null;
+
+        try {
+            server = new ServerSocket(4000);
+            System.out.println("Server Waiting for image");
+            socket = server.accept();
+            System.out.println("Client connected.");
+
+            InputStream in = socket.getInputStream();
+            DataInputStream dis = new DataInputStream(in);
+            int len = dis.readInt();
+            System.out.println("Image Size: " + len / 1024 + "KB");
+
+            byte[] data = new byte[len];
+            dis.readFully(data);
+            dis.close();
+            in.close();
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            BufferedImage bImage = ImageIO.read(bais);
+
+            SwingUtilities.invokeLater(() -> {
+                JFrame f = new JFrame("Server");
+                ImageIcon icon = new ImageIcon(bImage);
+                JLabel label = new JLabel(icon);
+                f.add(label);
+                f.pack();
+                f.setVisible(true);
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (socket != null) {
+                socket.close();
+            }
+            if (server != null) {
+                server.close();
+            }
+        }
+    }
+}
+
+
+
+HTTP CLIENT..........
+
+
+import java.net.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
+public class Client {
+
+    public static void main(String[] args) {
+        Socket soc = null;
+        BufferedImage img = null;
+
+        try {
+            soc = new Socket("localhost", 4000);
+            System.out.println("Client is running.");
+
+            System.out.println("Reading image from disk.");
+            img = ImageIO.read(new File("coffee.jpg"));
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(img, "jpg", baos);
+            baos.flush();
+            byte[] bytes = baos.toByteArray();
+            baos.close();
+
+            System.out.println("Sending image to server.");
+            OutputStream out = soc.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(out);
+            dos.writeInt(bytes.length);
+            dos.write(bytes, 0, bytes.length);
+            System.out.println("Image sent to server.");
+            dos.close();
+            out.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (soc != null && !soc.isClosed()) {
+                    soc.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
